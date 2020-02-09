@@ -78,9 +78,11 @@ class MultiProviderEmailServiceTest extends Specification {
         def apiEmailResponse = emailService.sendEmail(request)
 
         then:
-        apiEmailResponse.providerResponses.size() == 2
-        apiEmailResponse.providerResponses[0].responseCode == 200
-        apiEmailResponse.providerResponses[0].emailProviderName == "Provider2"
+        def successfulResponse = apiEmailResponse.providerResponses.find {
+            r -> r.responseCode == 200 && r.emailProviderName == "Provider2"
+        }
+
+        successfulResponse.message == "Ok Sent"
         apiEmailResponse.request == request
     }
 
