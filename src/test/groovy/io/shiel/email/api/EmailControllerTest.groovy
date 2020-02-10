@@ -24,8 +24,14 @@ class EmailControllerTest extends BaseControllerTest {
 
     def "Valid email requests can be fulfilled and return OK response"() {
         given:
-        ApiEmailRequest request = new ApiEmailRequest("john.wayne@gmail.com", "bruce.wayne@gmail.com",
-                "Subject", "Text")
+        ApiEmailRequest request = new ApiEmailRequest(
+                ["john.wayne@gmail.com"],
+                ["cc.john.wayne@gmail.com"],
+                ["bcc.john.wayne@gmail.com"],
+                "bruce.wayne@gmail.com",
+                "Subject",
+                "Text"
+        )
 
         and:
         emailService.sendEmail(_) >> new ApiEmailResponse(request, singleton(new EmailResponse("DummyApi", 200, "OK")))
@@ -39,8 +45,14 @@ class EmailControllerTest extends BaseControllerTest {
 
     def "Valid email requests with empty optional fields can be fulfilled and return OK response"() {
         given:
-        ApiEmailRequest request = new ApiEmailRequest("john.wayne@gmail.com", "bruce.wayne@gmail.com",
-                null, null)
+        ApiEmailRequest request = new ApiEmailRequest(
+                ["john.wayne@gmail.com"],
+                null,
+                null,
+                "bruce.wayne@gmail.com",
+                "Subject",
+                "Text"
+        )
 
         and:
         emailService.sendEmail(_) >> new ApiEmailResponse(request, singleton(new EmailResponse("DummyApi", 200, "OK")))
@@ -54,8 +66,14 @@ class EmailControllerTest extends BaseControllerTest {
 
     def "Missing required fields in request will fail and return 400 response"() {
         given:
-        ApiEmailRequest request = new ApiEmailRequest("john.wayne@gmail.com", null,
-                "Subject", "Text")
+        ApiEmailRequest request = new ApiEmailRequest(
+                ["john.wayne@gmail.com"],
+                ["cc.john.wayne@gmail.com"],
+                ["bcc.john.wayne@gmail.com"],
+                null,
+                "Subject",
+                null
+        )
 
         and:
         emailService.sendEmail(_) >> new ApiEmailResponse(request, new ArrayList<EmailResponse>())
@@ -66,8 +84,14 @@ class EmailControllerTest extends BaseControllerTest {
 
     def "Invalid Format for Email field in request will fail and return 400 response"() {
         given:
-        ApiEmailRequest request = new ApiEmailRequest("INVALID_EMAIL", "validemailaddress@somewhere.com",
-                "Subject", "Text")
+        ApiEmailRequest request = new ApiEmailRequest(
+                ["INVALID_EMAIL"],
+                ["cc.john.wayne@gmail.com"],
+                ["bcc.john.wayne@gmail.com"],
+                "bruce.wayne@gmail.com",
+                "Subject",
+                "Text"
+        )
 
         and:
         emailService.sendEmail(_) >> new ApiEmailResponse(request, new ArrayList<EmailResponse>())

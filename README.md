@@ -21,10 +21,12 @@ http://api.shiel.io/swagger-ui.html#!/email/sendEmailUsingPOST
 `HTTP POST requests` can be made to http://api.shiel.io/email with the following Body structure
 ```
 {
-	"to": "paddyshiel@gmail.com",
-	"from": "paddyshiel@outlook.com",
-	"subject": "EmailApi delivering mails via multiple providers",
-	"text": "Exposes a Rest API that accepts the necessary information in JSON Format and sends emails."
+	"to": ["paddyshiel@outlook.com", "someone@shiel.io"],
+	"cc": ["paddy@shiel.io", "someone2@shiel.io"],
+	"bcc": ["paddyshiel@gmail.com"],
+	"from": "amzfitz@gmail.com",
+	"subject": "Multiple To, CC and BCC",
+	"text": "EmailApi: Exposes a Rest API that accepts the necessary information in JSON Format and sends emails."
 }
 ```
 
@@ -89,7 +91,7 @@ Additionally, the application has been deployed to AWS.
 
 - These 3 instances are in a Target group behind a loadbalancer (http://email-api-1372118349.ap-southeast-2.elb.amazonaws.com/swagger-ui.html)
 
-- And for convenience I can added a DNS record for a friendly URL (http://api.shiel.io/swagger-ui.html)
+- And for convenience I have added a DNS record for a friendly URL (http://api.shiel.io/swagger-ui.html)
 
 ## TO-DO:
 [TODO-1]: Code Coverage Improvement

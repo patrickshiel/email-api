@@ -5,17 +5,21 @@ import io.shiel.email.integration.model.EmailResponse;
 import io.shiel.email.integration.model.ModelTransformer;
 import io.shiel.email.integration.model.ProviderException;
 
+import static org.apache.tomcat.util.buf.StringUtils.join;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 public class MailGunModelTransformer implements ModelTransformer<MailGunRequest, MailGunResponse> {
 
     public static final String API_NAME = "MailGun";
+    private static final char SEPARATOR = ',';
 
     @Override
     public MailGunRequest transformRequest(ApiEmailRequest apiRequest) {
         return MailGunRequest.builder()
                 .from(apiRequest.getFrom())
-                .to(apiRequest.getTo())
+                .to(join(apiRequest.getTo(), SEPARATOR))
+                .cc(join(apiRequest.getCc(), SEPARATOR))
+                .bcc(join(apiRequest.getBcc(), SEPARATOR))
                 .subject(apiRequest.getSubject())
                 .text(apiRequest.getText())
                 .build();

@@ -16,7 +16,7 @@ public class SendGridResponse implements ProviderResponse {
     public SendGridResponse(HttpResponse httpResponse, String message) {
         this.httpResponse = httpResponse;
         this.responseCode = httpResponse.getStatusLine().getStatusCode();
-        this.message = message;
+        this.message = httpResponse.getStatusLine().getReasonPhrase() + "|" + message;
     }
 
     public SendGridResponse(Exception ex) {
