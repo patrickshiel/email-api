@@ -28,10 +28,22 @@ http://api.shiel.io/swagger-ui.html
 }
 ```
 
-
 ### Prerequisites
 
 This project is build with Maven and runs with Java 8 +.
+
+### API Keys
+<mark>
+The API Keys have been redacted from the github repository. To build this application you will need to provide the 
+following api keys by setting the values in 
+</mark> 
+
+`src/main/resources/application.properties`
+
+`provider.mailgun.apikey = ******`
+`provider.sendgrid.apikey = ******`
+
+
 
 ### Installing
 
