@@ -10,7 +10,8 @@ If one of the services goes down, your service can quickly failover to a differe
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+See deployment for notes on how to deploy the project on a live system.
 
 ### API Documentation - Swagger
 
@@ -24,7 +25,7 @@ http://api.shiel.io/swagger-ui.html#!/email/sendEmailUsingPOST
 	"to": ["paddyshiel@outlook.com", "someone@shiel.io"],
 	"cc": ["paddy@shiel.io", "someone2@shiel.io"],
 	"bcc": ["paddyshiel@gmail.com"],
-	"from": "amzfitz@gmail.com",
+	"from": "email.tester@shiel.io",
 	"subject": "Multiple To, CC and BCC",
 	"text": "EmailApi: Exposes a Rest API that accepts the necessary information in JSON Format and sends emails."
 }
@@ -99,7 +100,7 @@ Additionally, the application has been deployed to AWS.
 - I have implemented tests to verify API behaviour using MockMvc, and parameterised unit tests using Spock as examples 
 to show how I would like to proceed.
 
-[TODO-2]: Create a E2E docker environent which will support
+[TODO-2]: Create a E2E docker environment which will support
 * The application running in a container
 * WireMock running in a container (http://wiremock.org/) to simulate provider endpoints
 * A suite of tests running with Serenity (http://www.thucydides.info/#/) to allow specification by example acceptance testing.
@@ -110,7 +111,7 @@ This Acceptance test suite can be ran using
 mvn clean verify
 ```
 
-[TODO-3]: Implement Infrastructure As Code to autodeploy
+[TODO-3]: Implement Infrastructure As Code to auto-deploy application and resources
 - Create CloudFormation or other to automatically provision the necessary deployment resources.
 - Currently the deployment has been done manually
 
