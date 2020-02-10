@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 Live running documentation for the definition of the `email` api has been defined using swagger and can be accessed here:
 
-http://api.shiel.io/swagger-ui.html
+http://api.shiel.io/swagger-ui.html#!/email/sendEmailUsingPOST
 
 `HTTP POST requests` can be made to http://api.shiel.io/email with the following Body structure
 ```
@@ -27,6 +27,9 @@ http://api.shiel.io/swagger-ui.html
 	"text": "Exposes a Rest API that accepts the necessary information in JSON Format and sends emails."
 }
 ```
+
+All fields are mandatory except for the `subject` field. Specific Providers (MailGun) will allow emails to be sent
+without a subject field, but SendGrid will return a Bad Request (400). 
 
 ### Prerequisites
 
@@ -63,9 +66,38 @@ mvn clean test
 
 These tests are using the Spock Framework (http://spockframework.org/spock/docs/1.3/index.html) and written in `groovy`
 
-### End to end tests
+## Deployment
 
-[TODO-1]: Create a E2E docker environent which will support
+The application can be built and ran locally using 
+```
+mvn clean install
+```
+```
+java -jar ./target/email-api-1.0-SNAPSHOT.jar
+```
+
+### Live Deployment
+
+Additionally, the application has been deployed to AWS.
+- The app is running in HA mode across 3 EC2 instances
+
+`http://ec2-13-239-27-66.ap-southeast-2.compute.amazonaws.com:8080/swagger-ui.html`
+
+`http://ec2-13-211-228-54.ap-southeast-2.compute.amazonaws.com/swagger-ui.html`
+
+`http://ec2-52-64-133-30.ap-southeast-2.compute.amazonaws.com/swagger-ui.html`
+
+- These 3 instances are in a Target group behind a loadbalancer (http://email-api-1372118349.ap-southeast-2.elb.amazonaws.com/swagger-ui.html)
+
+- And for convenience I can added a DNS record for a friendly URL (http://api.shiel.io/swagger-ui.html)
+
+## TO-DO:
+[TODO-1]: Code Coverage Improvement
+- Currently the unit test coverage is below acceptable requirements if this app was to be shipped.
+- I have implemented tests to verify API behaviour using MockMvc, and parameterised unit tests using Spock as examples 
+to show how I would like to proceed.
+
+[TODO-2]: Create a E2E docker environent which will support
 * The application running in a container
 * WireMock running in a container (http://wiremock.org/) to simulate provider endpoints
 * A suite of tests running with Serenity (http://www.thucydides.info/#/) to allow specification by example acceptance testing.
@@ -76,33 +108,22 @@ This Acceptance test suite can be ran using
 mvn clean verify
 ```
 
-## Deployment
+[TODO-3]: Implement Infrastructure As Code to autodeploy
+- Create CloudFormation or other to automatically provision the necessary deployment resources.
+- Currently the deployment has been done manually
 
-The application can be built and ran locally using 
-```
-mvn clean verify
-```
-```
-java -jar ./target/email-api-1.0-SNAPSHOT.jar
-```
 
-### Live Deployment
+[TODO-4]: Review Application Architecture
+- As there is very little state to manage; this application behaviour may suit a serverless approach.
+AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume.
+With Lambda, you can run code for virtually any type of application or backend service - all with zero administration. Just upload your code and Lambda takes care of everything required to run and scale your code with high availability. You can set up your code to automatically trigger from other AWS services or call it directly from any web or mobile app.
 
-Additionally, the application has been deployed to AWS.
-- The app is running in HA mode across 3 EC2 instances
--- http://ec2-13-239-27-66.ap-southeast-2.compute.amazonaws.com:8080/swagger-ui.html
--- http://ec2-13-211-228-54.ap-southeast-2.compute.amazonaws.com/swagger-ui.html
--- http://ec2-52-64-133-30.ap-southeast-2.compute.amazonaws.com/swagger-ui.html
-
-- These 3 instances are in a Target group behind a loadbalancer (http://email-api-1372118349.ap-southeast-2.elb.amazonaws.com/swagger-ui.html)
-
-- And for convenience I can added a DNS record for a friendly URL (http://api.shiel.io/swagger-ui.html)
 
 ## Built With
 
 * [Spring Boot](https://spring.io/projects/spring-boot) - Create stand-alone Spring applications
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Apache Http Components Client](.https://hc.apache.org/httpcomponents-client-4.5.x/index.html) - HTTP Client used to integrate with Email Provider HTTP Apis
+* [Apache Http Components Client](https://hc.apache.org/httpcomponents-client-4.5.x/index.html) - HTTP Client used to integrate with Email Provider HTTP Apis
 * [Swagger](https://swagger.io/) -  HTTP API Definition and documentation
 ## Authors
 
