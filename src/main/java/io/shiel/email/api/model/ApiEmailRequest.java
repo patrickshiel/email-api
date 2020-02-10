@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import java.util.List;
 
 import static io.shiel.email.api.model.ValidationConstants.EMAIL_REGEXP;
@@ -35,7 +34,7 @@ public class ApiEmailRequest {
     }
 
     @NotNull(message = "\"to\" field must be provided.")
-    @Size(min=1)
+    @Size(min = 1)
     public List<@Pattern(regexp = EMAIL_REGEXP, message = "Invalid email address in \"to\" field.") String> getTo() {
         return to;
     }
@@ -45,7 +44,7 @@ public class ApiEmailRequest {
     }
 
     @NotNull(message = "\"from\" field must be provided.")
-    @Size(min=1)
+    @Size(min = 1)
     @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email address in \"from\" field.")
     public String getFrom() {
         return from;

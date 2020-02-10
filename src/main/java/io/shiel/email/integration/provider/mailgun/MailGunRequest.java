@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.http.Consts.UTF_8;
+import static org.springframework.util.StringUtils.isEmpty;
 
 public class MailGunRequest implements ProviderRequest {
 
@@ -34,13 +35,19 @@ public class MailGunRequest implements ProviderRequest {
 
     public UrlEncodedFormEntity toFormData() {
         List<NameValuePair> form = new ArrayList<>();
-        form.add(new BasicNameValuePair("from", this.from));
-        form.add(new BasicNameValuePair("to", this.to));
-        form.add(new BasicNameValuePair("cc", this.cc));
-        form.add(new BasicNameValuePair("bcc", this.bcc));
-        form.add(new BasicNameValuePair("subject", this.subject));
-        form.add(new BasicNameValuePair("text", this.text));
+        addFormData("from", this.from, form);
+        addFormData("to", this.to, form);
+        addFormData("cc", this.cc, form);
+        addFormData("bcc", this.bcc, form);
+        addFormData("subject", this.subject, form);
+        addFormData("text", this.text, form);
         return new UrlEncodedFormEntity(form, UTF_8);
+    }
+
+    private void addFormData(String key, String value, List<NameValuePair> formData) {
+        if (!isEmpty(value)) {
+            formData.add(new BasicNameValuePair(key, value));
+        }
     }
 
     public static class Builder {

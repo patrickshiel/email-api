@@ -7,7 +7,7 @@ public class HttpEmailProviderConfig {
     private String providerApiKey;
     private RequestConfig requestConfig;
 
-    public HttpEmailProviderConfig(String providerUrl, String providerApiKey, RequestConfig config){
+    public HttpEmailProviderConfig(String providerUrl, String providerApiKey, RequestConfig config) {
         this.providerApiKey = providerApiKey;
         this.providerUrl = providerUrl;
         this.requestConfig = config;

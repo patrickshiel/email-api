@@ -5,6 +5,7 @@ import io.shiel.email.integration.model.EmailResponse;
 import io.shiel.email.integration.model.ModelTransformer;
 import io.shiel.email.integration.model.ProviderException;
 
+import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -17,9 +18,15 @@ public class SendGridModelTransformer implements ModelTransformer<SendGridReques
         SendGridRequest request = new SendGridRequest();
 
         SendGridRequest.Personalization personalization = new SendGridRequest.Personalization();
-        personalization.setTo(apiRequest.getTo().stream().map(SendGridRequest.Email::new).collect(toList()));
-        personalization.setCc(apiRequest.getCc().stream().map(SendGridRequest.Email::new).collect(toList()));
-        personalization.setBcc(apiRequest.getBcc().stream().map(SendGridRequest.Email::new).collect(toList()));
+        if (nonNull(apiRequest.getTo())) {
+            personalization.setTo(apiRequest.getTo().stream().map(SendGridRequest.Email::new).collect(toList()));
+        }
+        if (nonNull(apiRequest.getCc())) {
+            personalization.setCc(apiRequest.getCc().stream().map(SendGridRequest.Email::new).collect(toList()));
+        }
+        if (nonNull(apiRequest.getBcc())) {
+            personalization.setBcc(apiRequest.getBcc().stream().map(SendGridRequest.Email::new).collect(toList()));
+        }
 
         request.getPersonalizations().add(personalization);
         request.setFrom(new SendGridRequest.Email(apiRequest.getFrom()));

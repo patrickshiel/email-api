@@ -29,9 +29,9 @@ public class SendGridRequest implements ProviderRequest {
     }
 
     public static class Personalization {
-        private List<Email> to = new ArrayList<>();
-        private List<Email> cc = new ArrayList<>();
-        private List<Email> bcc = new ArrayList<>();
+        private List<Email> to;
+        private List<Email> cc;
+        private List<Email> bcc;
 
         public List<Email> getTo() {
             return to;

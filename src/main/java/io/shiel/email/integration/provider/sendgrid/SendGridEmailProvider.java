@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.shiel.email.integration.model.ProviderException;
 import io.shiel.email.integration.provider.HttpEmailProvider;
 import io.shiel.email.integration.provider.HttpEmailProviderConfig;
-import io.shiel.email.util.HttpUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
